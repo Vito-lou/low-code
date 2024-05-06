@@ -1,0 +1,47 @@
+{
+  // 编译选项
+  "compilerOptions": {
+    // 生成代码的语言版本
+    "target": "es5",
+    // 指定jsx编译成什么形式
+    "jsx": "react-jsx",
+    // 指定要包含在编译中的library
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
+    "baseUrl": ".",
+    // 生成代码的模块化标准
+    "module": "esnext",
+    // 模块解析（查找）的策略
+    "moduleResolution": "node",
+    "paths": {
+      "@/*": ["src/*"]
+    },
+    // 允许导入扩展名为.json的模块
+    "resolveJsonModule": true,
+    // 允许ts编译js文件
+    "allowJs": true,
+    // 开启严格模式
+    "strict": true,
+    // 为switch语句启用错误报告
+    "noFallthroughCasesInSwitch": true,
+    // 编译时不产生任何文件(只进行类型检查)
+    "noEmit": true,
+    // 允许通过import x from 'y',即使模块中没有显式指定default导出
+    "allowSyntheticDefaultImports": true,
+    // es模块，互操作，屏蔽es模块化和commonjs模块化之间的差异
+    "esModuleInterop": true,
+    // 对文件名强制区分大小写
+    "forceConsistentCasingInFileNames": true,
+    // 是否将没有import/export的文件视为旧脚本文件
+    "isolatedModules": true,
+    // 跳过声明文件的类型检查
+    "skipLibCheck": true
+  },
+  // 指定允许ts处理的目录
+  "include": [
+    "src"
+  ]
+}
