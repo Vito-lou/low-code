@@ -2,12 +2,14 @@ import React from 'react';
 import { Engine, IResource, IBehavior } from '@lowcode/core';
 
 export interface IDesignerLayoutProps {
+  children?: React.ReactNode;
   prefixCls?: string;
   theme?: 'dark' | 'light' | (string & {});
   variables?: Record<string, string>;
   position?: 'fixed' | 'absolute' | 'relative';
 }
 export interface IDesignerProps extends IDesignerLayoutProps {
+  children?: React.ReactNode;
   engine: Engine;
 }
 

@@ -1,15 +1,18 @@
-import React from 'react'
-import { usePrefix, usePosition } from '../hooks'
-import { Layout } from '../containers'
-import cls from 'classnames'
+import React from 'react';
+import { useCssInJs, usePosition, usePrefix } from '../hooks';
+import { Layout } from '../containers';
+import cls from 'classnames';
+import { genStudioPanelStyle } from './styles';
+
 export interface IStudioPanelProps {
-  style?: React.CSSProperties
-  className?: string
-  logo?: React.ReactNode
-  actions?: React.ReactNode
-  prefixCls?: string
-  theme?: string
-  position?: React.ComponentProps<typeof Layout>['position']
+  children?: React.ReactNode;
+  style?: React.CSSProperties;
+  className?: string;
+  logo?: React.ReactNode;
+  actions?: React.ReactNode;
+  prefixCls?: string;
+  theme?: string;
+  position?: React.ComponentProps<typeof Layout>['position'];
 }
 
 const StudioPanelInternal: React.FC<IStudioPanelProps> = ({
@@ -17,26 +20,40 @@ const StudioPanelInternal: React.FC<IStudioPanelProps> = ({
   actions,
   ...props
 }) => {
-  const prefix = usePrefix('main-panel')
-  const position = usePosition()
-  const classNameBase = cls('root', position, props.className)
+  const prefix = usePrefix('main-panel');
+  const position = usePosition();
+  const classNameBase = cls('root', position, props.className);
+
+  const { hashId, wrapSSR } = useCssInJs({
+    prefix,
+    styleFun: genStudioPanelStyle,
+  });
+
   if (logo || actions) {
-    return (
-      <div {...props} className={cls(`${prefix}-container`, classNameBase)}>
-        <div className={prefix + '-header'}>
-          <div className={prefix + '-header-logo'}>{logo}</div>
-          <div className={prefix + '-header-actions'}>{actions}</div>
+    return wrapSSR(
+      <div
+        {...props}
+        className={cls(`${prefix}-container`, classNameBase, hashId)}
+      >
+        <div className={cls(prefix + '-header', hashId)}>
+          <div className={cls(prefix + '-header-logo', hashId)}>{logo}</div>
+          <div className={cls(prefix + '-header-actions', hashId)}>
+            {actions}
+          </div>
         </div>
-        <div className={prefix}>{props.children}</div>
-      </div>
-    )
+        <div className={cls(prefix, hashId)}>{props.children}</div>
+      </div>,
+    );
   }
-  return (
-    <div {...props} className={cls(prefix, classNameBase)}>
+  return wrapSSR(
+    <div
+      {...props}
+      className={cls(`${prefix}-container`, classNameBase, hashId)}
+    >
       {props.children}
-    </div>
-  )
-}
+    </div>,
+  );
+};
 
 export const StudioPanel: React.FC<IStudioPanelProps> = (props) => {
   return (
@@ -47,5 +64,5 @@ export const StudioPanel: React.FC<IStudioPanelProps> = (props) => {
     >
       <StudioPanelInternal {...props} />
     </Layout>
-  )
-}
+  );
+};

@@ -1,25 +1,26 @@
-import React from 'react'
-import cls from 'classnames'
-import { useDesigner, usePrefix } from '../../hooks'
-import { TreeNode } from '@lowcode/core'
+import React from 'react';
+import cls from 'classnames';
+import { useDesigner, usePrefix, useToken } from '../../hooks';
+import { TreeNode } from '@lowcode/core';
 
 export interface IResizeHandlerProps {
-  node: TreeNode
+  node: TreeNode;
 }
 
 export const ResizeHandler: React.FC<IResizeHandlerProps> = (props) => {
-  const designer = useDesigner()
-  const prefix = usePrefix('aux-node-resize-handler')
+  const designer = useDesigner();
+  const prefix = usePrefix('aux-node-resize-handler');
+  const { hashId } = useToken();
   const createHandler = (value: string) => {
     return {
       [designer.props.nodeResizeHandlerAttrName]: value,
-      className: cls(prefix, value),
-    }
-  }
-  const allowResize = props.node.allowResize()
-  if (!allowResize) return null
-  const allowX = allowResize.includes('x')
-  const allowY = allowResize.includes('y')
+      className: cls(prefix, value, hashId),
+    };
+  };
+  const allowResize = props.node.allowResize();
+  if (!allowResize) return null;
+  const allowX = allowResize.includes('x');
+  const allowY = allowResize.includes('y');
   return (
     <>
       {allowX && <div {...createHandler('left-center')}></div>}
@@ -31,5 +32,5 @@ export const ResizeHandler: React.FC<IResizeHandlerProps> = (props) => {
       {allowX && allowY && <div {...createHandler('left-bottom')}></div>}
       {allowY && allowY && <div {...createHandler('right-bottom')}></div>}
     </>
-  )
-}
+  );
+};

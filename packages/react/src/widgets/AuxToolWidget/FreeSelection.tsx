@@ -1,30 +1,37 @@
-import React from 'react'
-import { useCursor, usePrefix, useViewport, useOperation } from '../../hooks'
-import { observer } from '@formily/reactive-react'
-import { CursorDragType, CursorStatus } from '@lowcode/core'
-import { calcRectByStartEndPoint } from '@lowcode/shared'
-import cls from 'classnames'
+import React from 'react';
+import {
+  useCursor,
+  usePrefix,
+  useViewport,
+  useOperation,
+  useToken,
+} from '../../hooks';
+import { observer } from '@formily/reactive-react';
+import { CursorDragType, CursorStatus } from '@lowcode/core';
+import { calcRectByStartEndPoint } from '@lowcode/shared';
+import cls from 'classnames';
 
 export const FreeSelection = observer(() => {
-  const cursor = useCursor()
-  const viewport = useViewport()
-  const operation = useOperation()
-  const prefix = usePrefix('aux-free-selection')
+  const cursor = useCursor();
+  const viewport = useViewport();
+  const operation = useOperation();
+  const prefix = usePrefix('aux-free-selection');
+  const { hashId } = useToken();
   const createSelectionStyle = () => {
     const startDragPoint = viewport.getOffsetPoint({
       x: cursor.dragStartPosition.topClientX,
       y: cursor.dragStartPosition.topClientY,
-    })
+    });
     const currentPoint = viewport.getOffsetPoint({
       x: cursor.position.topClientX,
       y: cursor.position.topClientY,
-    })
+    });
     const rect = calcRectByStartEndPoint(
       startDragPoint,
       currentPoint,
       viewport.dragScrollXDelta,
-      viewport.dragScrollYDelta
-    )
+      viewport.dragScrollYDelta,
+    );
     const baseStyle: React.CSSProperties = {
       position: 'absolute',
       top: 0,
@@ -38,16 +45,18 @@ export const FreeSelection = observer(() => {
       pointerEvents: 'none',
       boxSizing: 'border-box',
       zIndex: 1,
-    }
-    return baseStyle
-  }
+    };
+    return baseStyle;
+  };
 
   if (
     operation.moveHelper.hasDragNodes ||
     cursor.status !== CursorStatus.Dragging ||
     cursor.dragType !== CursorDragType.Move
   )
-    return null
+    return null;
 
-  return <div className={cls(prefix)} style={createSelectionStyle()}></div>
-})
+  return (
+    <div className={cls(prefix, hashId)} style={createSelectionStyle()}></div>
+  );
+});

@@ -1,48 +1,54 @@
-import React, { useEffect, useState } from 'react'
-import { TreeNode, ITreeNode, WorkbenchTypes } from '@lowcode/core'
-import { observer } from '@formily/reactive-react'
-import { useTree, useWorkbench } from '../hooks'
-import { Viewport } from '../containers'
-import { requestIdle } from '@lowcode/shared'
+import React, { useEffect, useState } from 'react';
+import {
+  TreeNode,
+  ITreeNode,
+  WorkbenchTypes,
+} from '@lowcode/core';
+import { observer } from '@formily/reactive-react';
+import { useTree, useWorkbench } from '../hooks';
+import { Viewport } from '../containers';
+import { requestIdle } from '@lowcode/shared';
 
 export interface IViewPanelProps {
-  type: WorkbenchTypes
+  type: WorkbenchTypes;
   children: (
     tree: TreeNode,
-    onChange: (tree: ITreeNode) => void
-  ) => React.ReactElement
-  scrollable?: boolean
-  dragTipsDirection?: 'left' | 'right'
+    onChange: (tree: ITreeNode) => void,
+  ) => React.ReactElement;
+  scrollable?: boolean;
+  dragTipsDirection?: 'left' | 'right';
 }
 
 export const ViewPanel: React.FC<IViewPanelProps> = observer((props) => {
-  const [visible, setVisible] = useState(true)
-  const workbench = useWorkbench()
-  const tree = useTree()
+  const [visible, setVisible] = useState(true);
+  const workbench = useWorkbench();
+  const tree = useTree();
   useEffect(() => {
     if (workbench.type === props.type) {
       requestIdle(() => {
         requestAnimationFrame(() => {
-          setVisible(true)
-        })
-      })
+          setVisible(true);
+        });
+      });
     } else {
-      setVisible(false)
+      setVisible(false);
     }
-  }, [workbench.type])
-  if (workbench.type !== props.type) return null
+  }, [workbench.type]);
+  if (workbench.type !== props.type) return null;
   const render = () => {
     return props.children(tree, (payload) => {
-      tree.from(payload)
-      tree.takeSnapshot()
-    })
-  }
+      debugger;
+      tree.from(payload);
+      tree.takeSnapshot();
+    });
+  };
   if (workbench.type === 'DESIGNABLE')
     return (
       <Viewport dragTipsDirection={props.dragTipsDirection}>
         {render()}
       </Viewport>
-    )
+    );
+
   return (
     <div
       style={{
@@ -54,9 +60,9 @@ export const ViewPanel: React.FC<IViewPanelProps> = observer((props) => {
     >
       {visible && render()}
     </div>
-  )
-})
+  );
+});
 
 ViewPanel.defaultProps = {
   scrollable: true,
-}
+};

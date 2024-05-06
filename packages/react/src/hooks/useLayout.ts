@@ -4,8 +4,6 @@ import { IDesignerLayoutContext } from '../types';
 import { globalThisPolyfill } from '@lowcode/shared';
 
 export const useLayout = (): IDesignerLayoutContext => {
-  return (
-    globalThisPolyfill['__DESIGNABLE_LAYOUT__'] ||
-    useContext(DesignerLayoutContext)
-  );
+  const layout = useContext(DesignerLayoutContext);
+  return globalThisPolyfill['__DESIGNABLE_LAYOUT__'] || layout;
 };

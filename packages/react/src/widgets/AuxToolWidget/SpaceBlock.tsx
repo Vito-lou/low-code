@@ -1,41 +1,51 @@
-import React, { Fragment } from 'react'
-import { useTransformHelper, useCursor, usePrefix } from '../../hooks'
-import { observer } from '@formily/reactive-react'
-import { CursorStatus } from '@lowcode/core'
-import { ILineSegment, calcRectOfAxisLineSegment } from '@lowcode/shared'
+import React, { Fragment } from 'react';
+import {
+  useTransformHelper,
+  useCursor,
+  usePrefix,
+  useToken,
+} from '../../hooks';
+import { observer } from '@formily/reactive-react';
+import { CursorStatus } from '@lowcode/core';
+import {
+  ILineSegment,
+  calcRectOfAxisLineSegment,
+} from '@lowcode/shared';
+import cls from 'classnames';
 
-export const SpaceBlock = observer(() => {
-  const cursor = useCursor()
-  const transformHelper = useTransformHelper()
-  const prefix = usePrefix('aux-space-block')
+export const SpaceBlock: React.FC = observer(() => {
+  const cursor = useCursor();
+  const transformHelper = useTransformHelper();
+  const prefix = usePrefix('aux-space-block');
+  const { hashId } = useToken();
 
-  if (cursor.status !== CursorStatus.Dragging) return null
+  if (cursor.status !== CursorStatus.Dragging) return null;
 
   const renderRulerBox = (distance: number, type: string) => {
     if (type === 'top' || type === 'bottom') {
       return (
-        <div className={prefix + '-ruler-v'}>
-          <div className={prefix + '-ruler-indicator'}>
+        <div className={cls(prefix + '-ruler-v', hashId)}>
+          <div className={cls(prefix + '-ruler-indicator', hashId)}>
             <span>{distance?.toFixed(0)}</span>
           </div>
         </div>
-      )
+      );
     } else if (type === 'left' || type === 'right') {
       return (
-        <div className={prefix + '-ruler-h'}>
-          <div className={prefix + '-ruler-indicator'}>
+        <div className={cls(prefix + '-ruler-h', hashId)}>
+          <div className={cls(prefix + '-ruler-indicator', hashId)}>
             <span>{distance?.toFixed(0)}</span>
           </div>
         </div>
-      )
+      );
     }
-  }
+  };
 
   const renderDashedLine = (line: ILineSegment) => {
-    const rect = calcRectOfAxisLineSegment(line)
-    if (!rect) return null
-    const width = rect.width || 2
-    const height = rect.height || 2
+    const rect = calcRectOfAxisLineSegment(line);
+    if (!rect) return null;
+    const width = rect.width || 2;
+    const height = rect.height || 2;
     return (
       <svg
         width={width + 'px'}
@@ -59,8 +69,8 @@ export const SpaceBlock = observer(() => {
           strokeWidth={2}
         ></line>
       </svg>
-    )
-  }
+    );
+  };
 
   return (
     <>
@@ -84,14 +94,14 @@ export const SpaceBlock = observer(() => {
                 {renderRulerBox(distance, type)}
               </div>
             </Fragment>
-          )
-        }
+          );
+        },
       )}
       {transformHelper.thresholdSpaceBlocks.map(({ rect }, key) => {
         return (
           <div
             key={key}
-            className={prefix}
+            className={cls(prefix, hashId)}
             style={{
               top: 0,
               left: 0,
@@ -103,10 +113,10 @@ export const SpaceBlock = observer(() => {
               zIndex: 1,
             }}
           ></div>
-        )
+        );
       })}
     </>
-  )
-})
+  );
+});
 
-SpaceBlock.displayName = 'SpaceBlock'
+SpaceBlock.displayName = 'SpaceBlock';

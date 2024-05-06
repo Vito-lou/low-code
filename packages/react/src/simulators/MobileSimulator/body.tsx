@@ -1,6 +1,7 @@
-import { observer } from '@formily/reactive-react'
-import React from 'react'
-import { useScreen, usePrefix, useTheme } from '../../hooks'
+import { observer } from '@formily/reactive-react';
+import React from 'react';
+import { useScreen, usePrefix, useTheme, useToken } from '../../hooks';
+import cls from 'classnames';
 
 export interface IMobileBodyProps {}
 
@@ -13,12 +14,13 @@ const MockupImages = {
     '//img.alicdn.com/imgextra/i4/O1CN01vuXGe31tEy00v2xBx_!!6000000005871-55-tps-946-459.svg',
     '//img.alicdn.com/imgextra/i4/O1CN01ehfzMc1QPqY6HONTJ_!!6000000001969-55-tps-459-945.svg',
   ],
-}
+};
 
 export const MobileBody: React.FC<IMobileBodyProps> = observer((props) => {
-  const screen = useScreen()
-  const theme = useTheme()
-  const prefix = usePrefix('mobile-simulator-body')
+  const screen = useScreen();
+  const theme = useTheme();
+  const prefix = usePrefix('mobile-simulator-body');
+  const { hashId } = useToken();
   const getContentStyles = (): React.CSSProperties => {
     if (screen.flip) {
       return {
@@ -28,7 +30,7 @@ export const MobileBody: React.FC<IMobileBodyProps> = observer((props) => {
         top: 43.3333,
         left: 106.667,
         overflow: 'hidden',
-      }
+      };
     }
     return {
       position: 'absolute',
@@ -37,19 +39,19 @@ export const MobileBody: React.FC<IMobileBodyProps> = observer((props) => {
       top: 126.667,
       left: 23.3333,
       overflow: 'hidden',
-    }
-  }
+    };
+  };
 
   return (
     <div
-      className={prefix}
+      className={cls(prefix, hashId)}
       style={{
         alignItems: screen.flip ? 'center' : '',
         minWidth: screen.flip ? 1000 : 0,
       }}
     >
       <div
-        className={prefix + '-wrapper'}
+        className={cls(prefix + '-wrapper', hashId)}
         style={{
           position: 'relative',
           minHeight: screen.flip ? 0 : 1000,
@@ -67,12 +69,15 @@ export const MobileBody: React.FC<IMobileBodyProps> = observer((props) => {
             backfaceVisibility: 'hidden',
           }}
         ></img>
-        <div className={prefix + '-content'} style={getContentStyles()}>
+        <div
+          className={cls(prefix + '-content', hashId)}
+          style={getContentStyles()}
+        >
           {props.children}
         </div>
       </div>
     </div>
-  )
-})
+  );
+});
 
-MobileBody.defaultProps = {}
+MobileBody.defaultProps = {};

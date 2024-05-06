@@ -1,13 +1,21 @@
-import React from 'react'
-import { useTransformHelper, useCursor, usePrefix } from '../../hooks'
-import { observer } from '@formily/reactive-react'
-import { CursorStatus } from '@lowcode/core'
+import React from 'react';
+import {
+  useTransformHelper,
+  useCursor,
+  usePrefix,
+  useToken,
+} from '../../hooks';
+import { observer } from '@formily/reactive-react';
+import { CursorStatus } from '@lowcode/core';
+import { Rect } from '@lowcode/shared';
+import cls from 'classnames';
 
-export const SnapLine = observer(() => {
-  const cursor = useCursor()
-  const transformHelper = useTransformHelper()
-  const prefix = usePrefix('aux-snap-line')
-  const createLineStyle = (rect: DOMRect) => {
+export const SnapLine: React.FC = observer(() => {
+  const cursor = useCursor();
+  const transformHelper = useTransformHelper();
+  const prefix = usePrefix('aux-snap-line');
+  const { hashId } = useToken();
+  const createLineStyle = (rect: Rect) => {
     const baseStyle: React.CSSProperties = {
       top: 0,
       left: 0,
@@ -17,24 +25,24 @@ export const SnapLine = observer(() => {
       background: `#b0b1f3`,
       position: 'absolute',
       zIndex: 2,
-    }
-    return baseStyle
-  }
-  if (cursor.status !== CursorStatus.Dragging) return null
+    };
+    return baseStyle;
+  };
+  if (cursor.status !== CursorStatus.Dragging) return null;
   return (
     <>
       {transformHelper.closestSnapLines.map((line, key) => {
-        if (line.type !== 'normal') return null
+        if (line.type !== 'normal') return null;
         return (
           <div
             key={key}
-            className={prefix}
+            className={cls(prefix, hashId)}
             style={createLineStyle(line.rect)}
           ></div>
-        )
+        );
       })}
     </>
-  )
-})
+  );
+});
 
-SnapLine.displayName = 'SnapLine'
+SnapLine.displayName = 'SnapLine';

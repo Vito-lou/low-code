@@ -18,6 +18,7 @@
   "devDependencies": {
     "@formily/reactive": "^2.3.1",
     "@formily/reactive-react": "^2.3.1",
+    "@types/react": "^18.2.78",
     "antd": "^5.16.2",
     "classnames": "^2.5.1",
     "father": "^4.4.0",
@@ -30,6 +31,7 @@
     "react": "^18.2.0"
   },
   "dependencies": {
+    "@ant-design/cssinjs": "^1.20.0",
     "@lowcode/core": "workspace:*",
     "@lowcode/shared": "workspace:*",
     "dateformat": "^5.0.3"

@@ -1,20 +1,27 @@
-import React from 'react'
-import { useTree, usePrefix } from '../../hooks'
-import { observer } from '@formily/reactive-react'
-import { IconWidget } from '../IconWidget'
-import './styles.less'
+import React from 'react';
+import { useTree, usePrefix, useCssInJs } from '../../hooks';
+import { observer } from '@formily/reactive-react';
+import { IconWidget } from '../IconWidget';
+// import './styles.less'
+import { genEmptyWidgetStyle } from './styles';
+import cls from 'classnames';
 
 export interface IEmptyWidgetProps {
-  dragTipsDirection?: 'left' | 'right'
+  children?: React.ReactNode;
+  dragTipsDirection?: 'left' | 'right';
 }
-//每次拖拽内容到画布都会重新渲染这个组件
+
 export const EmptyWidget: React.FC<IEmptyWidgetProps> = observer((props) => {
-  const tree = useTree()
-  const prefix = usePrefix('empty')
+  const tree = useTree();
+  const prefix = usePrefix('empty');
+  const { hashId, wrapSSR } = useCssInJs({
+    prefix,
+    styleFun: genEmptyWidgetStyle,
+  });
   const renderEmpty = () => {
     return (
       <div style={{ display: 'flex', flexDirection: 'column' }}>
-        <div className="animations">
+        <div className={cls('animations', hashId)}>
           <IconWidget
             infer={
               props.dragTipsDirection === 'left'
@@ -25,7 +32,7 @@ export const EmptyWidget: React.FC<IEmptyWidgetProps> = observer((props) => {
           />
           <IconWidget infer="BatchDragAnimation" size={240} />
         </div>
-        <div className="hotkeys-list">
+        <div className={cls('hotkeys-list', hashId)}>
           <div>
             Selection <IconWidget infer="Command" /> + Click /{' '}
             <IconWidget infer="Shift" /> + Click /{' '}
@@ -40,18 +47,18 @@ export const EmptyWidget: React.FC<IEmptyWidgetProps> = observer((props) => {
           </div>
         </div>
       </div>
-    )
-  }
+    );
+  };
   if (!tree?.children?.length) {
-    return (
-      <div className={prefix}>
+    return wrapSSR(
+      <div className={cls(prefix, hashId)}>
         {props.children ? props.children : renderEmpty()}
-      </div>
-    )
+      </div>,
+    );
   }
-  return null
-})
+  return null;
+});
 
 EmptyWidget.defaultProps = {
   dragTipsDirection: 'left',
-}
+};

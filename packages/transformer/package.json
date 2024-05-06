@@ -1,0 +1,36 @@
+{
+  "name": "@lowcode/designable-formily-transformer",
+  "version": "0.0.7-beta.0",
+  "description": "",
+  "main": "dist/index.js",
+  "module": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "dev": "father dev",
+    "build": "father build",
+    "build:deps": "father prebundle",
+    "prepublishOnly": "father doctor && npm run build"
+  },
+  "keywords": [],
+  "authors": [
+    "fengxiaotx@163.com"
+  ],
+  "license": "MIT",
+  "files": [
+    "dist",
+    "compiled"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "devDependencies": {
+    "father": "^4.3.0"
+  },
+  "dependencies": {
+    "@formily/core": "^2.2.29",
+    "@formily/json-schema": "^2.2.29",
+    "@lowcode/core": "workspace:*",
+    "@lowcode/shared": "workspace:*"
+  },
+  "gitHead": "5014179493da76e7f55bafd2dd35594d42ae2bf1"
+}
