@@ -109,6 +109,7 @@ export const RightPanel: React.FC<IRightPanelProps> & {
       </div>,
     );
   }
+
   return wrapSSR(
     <div className={cls(
       prefix, hashId
