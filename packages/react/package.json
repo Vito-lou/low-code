@@ -32,6 +32,7 @@
   },
   "dependencies": {
     "@ant-design/cssinjs": "^1.20.0",
+    "@ant-design/icons": "^5.3.7",
     "@lowcode/core": "workspace:*",
     "@lowcode/shared": "workspace:*",
     "dateformat": "^5.0.3"

@@ -6,18 +6,15 @@
     // 指定jsx编译成什么形式
     "jsx": "react-jsx",
     // 指定要包含在编译中的library
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ],
+    "lib": ["dom", "dom.iterable", "esnext"],
     "baseUrl": ".",
     // 生成代码的模块化标准
     "module": "esnext",
     // 模块解析（查找）的策略
     "moduleResolution": "node",
     "paths": {
-      "@/*": ["src/*"]
+      "@/*": ["src/*"],
+      "@lowcode/*": ["../../packages/*/src"]
     },
     // 允许导入扩展名为.json的模块
     "resolveJsonModule": true,
@@ -41,7 +38,5 @@
     "skipLibCheck": true
   },
   // 指定允许ts处理的目录
-  "include": [
-    "src"
-  ]
+  "include": ["src"]
 }

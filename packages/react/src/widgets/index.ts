@@ -13,3 +13,6 @@ export * from './NodePathWidget';
 export * from './NodeTitleWidget';
 export * from './DroppableWidget';
 export * from './NodeActionsWidget';
+// 以下为自定义新增部分
+export * from './PageWidget';
+export * from './DataModelWidget';
