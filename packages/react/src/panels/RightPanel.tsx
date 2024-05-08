@@ -66,8 +66,6 @@ export const RightPanel: React.FC<IRightPanelProps> & {
     props.defaultActiveKey ?? getDefaultKey(props.children),
   );
   const activeKeyRef = useRef(null);
-
-  const [innerVisible, setInnerVisible] = useState(true);
   const [visible, setVisible] = useState(true);
   const items = parseItems(props.children);
   const currentItem = findItem(items, activeKey);
@@ -99,60 +97,83 @@ export const RightPanel: React.FC<IRightPanelProps> & {
       </div>
     );
   };
+  if (!visible) {
+    return wrapSSR(
+      <div
+        className={cls(prefix + '-opener', hashId)}
+        onClick={() => {
+          setVisible(true);
+        }}
+      >
+        <IconWidget infer="Setting" size={20} />
+      </div>,
+    );
+  }
   return wrapSSR(
     <div className={cls(
       prefix, hashId
     )}>
-      <div className={cls(prefix + '-tabs', hashId)}>
-        {items.map((item, index) => {
-          const takeTab = () => {
-            if (item.href) {
-              return <a href={item.href}>{item.icon}</a>;
-            }
+      <div className={cls(prefix + '-header', hashId)}>
+        <div className={cls(prefix + '-header-tabs', hashId)}>
+          {items.map((item, index) => {
+            const takeTab = () => {
+              if (item.href) {
+                return <a href={item.href}>{item.icon}</a>;
+              }
+              return (
+                <IconWidget
+                  tooltip={
+                    props.showNavTitle
+                      ? null
+                      : {
+                        title: <TextWidget>{item.title}</TextWidget>,
+                      }
+                  }
+                  infer={item.icon}
+                />
+              );
+            };
+            const shape = item.shape ?? 'tab';
+            const Comp = shape === 'link' ? 'a' : 'div';
             return (
-              <IconWidget
-                tooltip={
-                  props.showNavTitle
-                    ? null
-                    : {
-                      title: <TextWidget>{item.title}</TextWidget>,
-                    }
-                }
-                infer={item.icon}
-              />
+              <Comp
+                className={cls(
+                  prefix + '-tabs-pane',
+                  {
+                    active: activeKey === item.key,
+                  },
+                  hashId,
+                )}
+                key={index}
+                href={item.href}
+                onClick={(e: any) => {
+                  if (shape === 'tab') {
+                    if (!props?.activeKey || !props?.onChange)
+                      setActiveKey(item.key);
+                  }
+                  item.onClick?.(e);
+                  props.onChange?.(item.key);
+                }}
+              >
+                {item.icon && takeTab()}
+                {props.showNavTitle && item.title ? (
+                  <div className={cls(prefix + '-tabs-pane-title', hashId)}>
+                    <TextWidget>{item.title}</TextWidget>
+                  </div>
+                ) : null}
+              </Comp>
             );
-          };
-          const shape = item.shape ?? 'tab';
-          const Comp = shape === 'link' ? 'a' : 'div';
-          return (
-            <Comp
-              className={cls(
-                prefix + '-tabs-pane',
-                {
-                  active: activeKey === item.key,
-                },
-                hashId,
-              )}
-              key={index}
-              href={item.href}
-              onClick={(e: any) => {
-                if (shape === 'tab') {
-                  if (!props?.activeKey || !props?.onChange)
-                    setActiveKey(item.key);
-                }
-                item.onClick?.(e);
-                props.onChange?.(item.key);
-              }}
-            >
-              {item.icon && takeTab()}
-              {props.showNavTitle && item.title ? (
-                <div className={cls(prefix + '-tabs-pane-title', hashId)}>
-                  <TextWidget>{item.title}</TextWidget>
-                </div>
-              ) : null}
-            </Comp>
-          );
-        })}
+          })}
+        </div>
+        <div className={cls(prefix + '-header-actions', hashId)}>
+          <IconWidget
+            infer="Close"
+            className={prefix + '-header-close'}
+            onClick={() => {
+              setVisible(false);
+            }}
+          />
+        </div>
       </div>
       {renderContent()}
     </div>
