@@ -37,7 +37,9 @@ import {
 } from '@lowcode/designable-formily-antd';
 import { SettingsForm } from '@lowcode/designable-react-settings-form';
 import { transformToSchema } from '@lowcode/designable-formily-transformer';
-import { Button } from 'antd';
+import { Button, Tabs } from 'antd';
+import type { TabsProps } from 'antd';
+import { Main } from './main'
 const App = () => {
   const engine = useMemo(
     () =>
@@ -65,6 +67,54 @@ const App = () => {
   useEffect(() => {
     GlobalRegistry.setDesignerLanguage('zh-cn');
   }, []);
+  //start
+  const onChange = (key: string) => {
+    console.log(key);
+  };
+  const FormWorkspace = () => {
+    return (
+      <Workspace id="form">
+        <WorkspacePanel>
+          <ToolbarPanel>
+            <DesignerToolsWidget />
+            <ViewToolsWidget
+              use={['DESIGNABLE', 'JSONTREE', 'MARKUP', 'PREVIEW']}
+            />
+          </ToolbarPanel>
+          <ViewportPanel style={{ height: '100%' }}>
+            <ViewPanel type="DESIGNABLE">
+              {() => (
+                <ComponentTreeWidget
+                  components={{
+                    Form,
+                    Field,
+                    Input,
+                    Rate,
+                    NumberPicker,
+                    Password,
+                    ArrayCards,
+                    ArrayTable,
+                  }}
+                />
+              )}
+            </ViewPanel>
+          </ViewportPanel>
+        </WorkspacePanel>
+      </Workspace>
+    )
+  }
+  const items: TabsProps['items'] = [
+    {
+      key: '1',
+      label: 'Tab 1',
+      children: <FormWorkspace></FormWorkspace>,
+    },
+    {
+      key: '3',
+      label: 'Tab 3',
+      children: 'Content of Tab Pane 3',
+    },
+  ];
   return (
     <Designer engine={engine}>
       <StudioPanel actions={[<Button onClick={handleSave}>保存</Button>]}>
@@ -94,7 +144,9 @@ const App = () => {
             {/*<ResourceWidget title="sources.Displays" sources={[Text]} />*/}
           </CompositePanel.Item>
         </CompositePanel>
-        <Workspace id="form">
+        <Main></Main>
+        {/* <Tabs size="small" defaultActiveKey="1" items={items} onChange={onChange} /> */}
+        {/* <Workspace id="form">
           <WorkspacePanel>
             <ToolbarPanel>
               <DesignerToolsWidget />
@@ -122,6 +174,34 @@ const App = () => {
             </ViewportPanel>
           </WorkspacePanel>
         </Workspace>
+        <Workspace id="form2">
+          <WorkspacePanel>
+            <ToolbarPanel>
+              <DesignerToolsWidget />
+              <ViewToolsWidget
+                use={['DESIGNABLE', 'JSONTREE', 'MARKUP', 'PREVIEW']}
+              />
+            </ToolbarPanel>
+            <ViewportPanel style={{ height: '100%' }}>
+              <ViewPanel type="DESIGNABLE">
+                {() => (
+                  <ComponentTreeWidget
+                    components={{
+                      Form,
+                      Field,
+                      Input,
+                      Rate,
+                      NumberPicker,
+                      Password,
+                      ArrayCards,
+                      ArrayTable,
+                    }}
+                  />
+                )}
+              </ViewPanel>
+            </ViewportPanel>
+          </WorkspacePanel>
+        </Workspace> */}
         <RightPanel showNavTitle>
           <RightPanel.Item title="panels.PropertySettings">
             <SettingsForm uploadAction="https://www.mocky.io/v2/5cc8019d300000980a055e76" />
@@ -137,7 +217,6 @@ const App = () => {
               sources={[ArrayCards, ArrayTable]}
             />
           </RightPanel.Item>
-
         </RightPanel>
         {/* <SettingsPanel title="panels.PropertySettings">
           <SettingsForm uploadAction="https://www.mocky.io/v2/5cc8019d300000980a055e76" />
