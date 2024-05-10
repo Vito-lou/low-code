@@ -37,8 +37,7 @@ import {
 } from '@lowcode/designable-formily-antd';
 import { SettingsForm } from '@lowcode/designable-react-settings-form';
 import { transformToSchema } from '@lowcode/designable-formily-transformer';
-import { Button, Tabs } from 'antd';
-import type { TabsProps } from 'antd';
+import { Button } from 'antd';
 import { Main } from './main'
 const App = () => {
   const engine = useMemo(
@@ -67,54 +66,7 @@ const App = () => {
   useEffect(() => {
     GlobalRegistry.setDesignerLanguage('zh-cn');
   }, []);
-  //start
-  const onChange = (key: string) => {
-    console.log(key);
-  };
-  const FormWorkspace = () => {
-    return (
-      <Workspace id="form">
-        <WorkspacePanel>
-          <ToolbarPanel>
-            <DesignerToolsWidget />
-            <ViewToolsWidget
-              use={['DESIGNABLE', 'JSONTREE', 'MARKUP', 'PREVIEW']}
-            />
-          </ToolbarPanel>
-          <ViewportPanel style={{ height: '100%' }}>
-            <ViewPanel type="DESIGNABLE">
-              {() => (
-                <ComponentTreeWidget
-                  components={{
-                    Form,
-                    Field,
-                    Input,
-                    Rate,
-                    NumberPicker,
-                    Password,
-                    ArrayCards,
-                    ArrayTable,
-                  }}
-                />
-              )}
-            </ViewPanel>
-          </ViewportPanel>
-        </WorkspacePanel>
-      </Workspace>
-    )
-  }
-  const items: TabsProps['items'] = [
-    {
-      key: '1',
-      label: 'Tab 1',
-      children: <FormWorkspace></FormWorkspace>,
-    },
-    {
-      key: '3',
-      label: 'Tab 3',
-      children: 'Content of Tab Pane 3',
-    },
-  ];
+
   return (
     <Designer engine={engine}>
       <StudioPanel actions={[<Button onClick={handleSave}>保存</Button>]}>

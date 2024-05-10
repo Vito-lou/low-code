@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { useCssInJs, usePrefix, useWorkbench } from '../../hooks';
+import React from "react";
+import { useCssInJs, usePrefix } from '../../hooks';
 import cls from 'classnames';
 import { genDataModelWidgetStyle } from './styles';
 import { Button, Tree } from 'antd';

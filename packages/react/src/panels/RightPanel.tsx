@@ -1,8 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { requestIdle, isValid } from '@lowcode/shared';
-import { observer } from '@formily/reactive-react';
+import { isValid } from '@lowcode/shared';
 import { TextWidget, IconWidget } from '../widgets';
-import { useCssInJs, usePrefix, useWorkbench } from '../hooks';
+import { useCssInJs, usePrefix } from '../hooks';
 import cls from 'classnames';
 import { genRightPanelStyle } from './styles';
 
