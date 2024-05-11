@@ -30,6 +30,8 @@ const GlobalState = {
 export const SettingsForm: React.FC<ISettingFormProps> = observer(
   (props) => {
     const workbench = useWorkbench();
+    console.log('workbech', workbench)
+    // debugger
     const currentWorkspace =
       workbench?.activeWorkspace || workbench?.currentWorkspace;
     const currentWorkspaceId = currentWorkspace?.id;

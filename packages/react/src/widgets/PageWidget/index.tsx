@@ -15,16 +15,31 @@ type DirectoryTreeProps = GetProps<typeof Tree.DirectoryTree>;
 const { DirectoryTree } = Tree;
 const treeData: TreeDataNode[] = [
   {
-    title: 'parent 0',
-    key: '0-0',
+    title: 'PC端',
+    key: 'PC',
     children: [
-      { title: 'leaf 0-0', key: '0-0-0', isLeaf: true },
-      { title: 'leaf 0-1', key: '0-0-1', isLeaf: true },
+      {
+        title: 'PC端', key: '0-0-0', isLeaf: false,
+        children: [
+          {
+            title: '页面', key: '0-0-0-0',
+            children: [
+              {
+                title: '测试页面1', key: '0-0-0-0-0', isLeaf: false,
+              },
+              {
+                title: '测试页面2', key: '0-0-0-0-2', isLeaf: false,
+              }
+            ]
+          }
+        ]
+      },
+      { title: 'PC端业务组件', key: '0-0-1', isLeaf: true },
     ],
   },
   {
-    title: 'parent 1',
-    key: '0-1',
+    title: 'H5端',
+    key: 'H5',
     children: [
       { title: 'leaf 1-0', key: '0-1-0', isLeaf: true },
       { title: 'leaf 1-1', key: '0-1-1', isLeaf: true },
@@ -33,6 +48,7 @@ const treeData: TreeDataNode[] = [
 ];
 
 export const PageWidget: React.FC = () => {
+  const workbench = useWorkbench()
   const prefix = usePrefix('pages-tree');
   const { hashId, wrapSSR } = useCssInJs({
     prefix,
@@ -76,7 +92,6 @@ export const PageWidget: React.FC = () => {
       <div className={cls(prefix + '-body', hashId)}>
         {
           activeKey === 'page' && <DirectoryTree
-            multiple
             defaultExpandAll
             onSelect={onSelect}
             onExpand={onExpand}
