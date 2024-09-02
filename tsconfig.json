@@ -1,11 +1,13 @@
 {
   "compilerOptions": {
     "esModuleInterop": true,
+    "outDir": "./dist",
     "moduleResolution": "node",
     "jsx": "react",
     "module": "commonjs",
     "target": "ES6",
     "allowJs": true,
+    "checkJs": true,
     "noUnusedLocals": true,
     "preserveConstEnums": true,
     "sourceMap": false,
@@ -17,5 +19,11 @@
     "paths": {
       "@lowcode/*": ["./packages/*/src"]
     }
-  }
+  },
+  "include": [
+    "packages/global.d.ts",
+    "packages/*/src",
+    "scripts/*",
+    "rollup.*.js"
+  ]
 }

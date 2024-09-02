@@ -1,21 +1,50 @@
 {
-  "name": "lowcode",
+  "name": "vito",
   "private": true,
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
     "dev": "pnpm --filter @lowcode/web run dev",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "preinstall": "npx only-allow pnpm",
+    "postinstall": "simple-git-hooks",
+    "check": "tsc --incremental --noEmit",
+    "lint": "eslint --cache .",
+    "format": "prettier --write --cache .",
+    "format-check": "prettier --check --cache ."
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
+  "simple-git-hooks": {
+    "pre-commit": "pnpm lint-staged && pnpm check",
+    "commit-msg": "node scripts/verify-commit.js"
+  },
+  "lint-staged": {
+    "*.{js,json}": [
+      "prettier --write"
+    ],
+    "*.ts?(x)": [
+      "eslint --fix",
+      "prettier --parser=typescript --write"
+    ]
+  },
   "devDependencies": {
-    "@types/node": "^20.12.8",
-    "prettier": "^3.2.5",
-    "rimraf": "^5.0.5",
-    "rollup": "^4.17.2",
-    "typescript": "^5.4.5"
+    "@eslint/js": "^9.9.0",
+    "@types/node": "^22.5.2",
+    "eslint": "^9.9.1",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-prettier": "^5.2.1",
+    "eslint-plugin-react": "^7.35.0",
+    "eslint-plugin-react-hooks": "5.1.0-rc-fb9a90fa48-20240614",
+    "eslint-plugin-react-refresh": "^0.4.11",
+    "globals": "^15.9.0",
+    "lint-staged": "^15.2.10",
+    "picocolors": "^1.0.1",
+    "prettier": "^3.3.3",
+    "simple-git-hooks": "^2.11.1",
+    "typescript": "^5.5.4",
+    "typescript-eslint": "^8.3.0"
   }
 }
