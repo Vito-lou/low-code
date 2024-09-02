@@ -5,6 +5,7 @@ import path from 'node:path'
 
 const msgPath = path.resolve('.git/COMMIT_EDITMSG')
 const msg = readFileSync(msgPath, 'utf-8').trim()
+console.log("verify-commit.js is running");
 
 const commitRE =
     /^(revert: )?(feat|fix|docs|dx|style|refactor|perf|test|workflow|build|ci|chore|types|wip|release)(\(.+\))?: .{1,50}/
