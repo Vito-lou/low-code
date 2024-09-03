@@ -4,6 +4,7 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "dev": "pnpm --filter @lowcode/web run dev",
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -19,7 +20,7 @@
   "license": "ISC",
   "simple-git-hooks": {
     "pre-commit": "pnpm lint-staged && pnpm check",
-    "commit-msg": "node scripts/verify-commit.js"
+    "commit-msg": "node scripts/verify-commit.cjs"
   },
   "lint-staged": {
     "*.{js,json}": [

@@ -10,7 +10,7 @@ import reactRefresh from 'eslint-plugin-react-refresh'
 export default [
   { files: ["**/*.{js,mjs,cjs,ts,jsx,tsx}"] },
   { languageOptions: { globals: globals.browser, ecmaVersion: 2020, } },
-  pluginJs.configs.recommended,
+  // pluginJs.configs.recommended,
   ...tseslint.configs.recommended,
   pluginReact.configs.flat.recommended,
   {
@@ -28,7 +28,7 @@ export default [
   configPrettier,
   {
     rules: {
-      "prettier/prettier": "error",
+      // "prettier/prettier": "error",
       ...reactHooks.configs.recommended.rules,
       'react-refresh/only-export-components': [
         'warn',

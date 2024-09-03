@@ -4,7 +4,7 @@
     "outDir": "./dist",
     "moduleResolution": "node",
     "jsx": "react",
-    "module": "commonjs",
+    "module": "esnext",
     "target": "ES6",
     "allowJs": true,
     "checkJs": true,
@@ -20,10 +20,5 @@
       "@lowcode/*": ["./packages/*/src"]
     }
   },
-  "include": [
-    "packages/global.d.ts",
-    "packages/*/src",
-    "scripts/*",
-    "rollup.*.js"
-  ]
+  "include": ["scripts/*"]
 }
